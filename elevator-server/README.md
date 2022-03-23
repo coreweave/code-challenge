@@ -44,7 +44,27 @@ at floor 8 and moving IDLE
 
 Different elevator algorithms exist to optimize for different use cases. The typical elevator has a button or two outside to fetch the elevator, and separate floor buttons inside. Some systems allow fetching the elevator and requesting a floor at the same time. Feel free to conceptualize whichever style of elevator you find fun.
 
-Set Up
+## Set Up
+
+```
 sudo apt update
 sudo apt install python3-pip
 pip3 install -r requirements.txt
+```
+
+## Assumptions and Improvements
+
+* One application creates one Elevator object.
+
+## Example
+
+```
+curl -X 'POST' \
+  'http://127.0.0.1:8000/floor/3' \
+  -H 'accept: application/json' \
+  -d ''
+curl -X 'POST' \
+  'http://127.0.0.1:8000/floor/3' \
+  -H 'accept: application/json' \
+  -d ''
+```
