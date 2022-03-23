@@ -4,7 +4,7 @@ from elevator import Elevator
 app = FastAPI()
 elevator = Elevator()
 
-@app.post('/floor/{target_floor}')
-async def moveElevator(target_floor):
-    activities = await elevator.move(int(target_floor))
+@app.post('/floor/{floor}')
+async def moveElevator(floor: int):
+    activities = await elevator.move(floor)
     return {'activities': activities}

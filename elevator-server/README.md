@@ -52,19 +52,29 @@ sudo apt install python3-pip
 pip3 install -r requirements.txt
 ```
 
+## Minimal Design
+
+* Python3, FastAPI
+* main.py: application logic
+* elevator.py: Elevator class
+* POST /floor/{target_floor} -> application/json {'activities': a list of activities}
+* Methods use async and await to handle concurrent requests
+
 ## Assumptions and Improvements
 
 * One application creates one Elevator object.
+* Real-world elevator state transition has more states. This project only handles four basic states: idle, up, down, doors open. State transition control is naive too.
 
 ## Example
 
+![Interactive API Docs](http://127.0.0.1:8000/docs)
+
 ```
-curl -X 'POST' \
-  'http://127.0.0.1:8000/floor/3' \
-  -H 'accept: application/json' \
-  -d ''
-curl -X 'POST' \
-  'http://127.0.0.1:8000/floor/3' \
-  -H 'accept: application/json' \
-  -d ''
+uvicorn main:app --reload
+curl -X 'POST' 'http://127.0.0.1:8000/floor/3' -H 'accept: application/json' -d '' | python3 -mjson.tool
+curl -X 'POST' 'http://127.0.0.1:8000/floor/-2' -H 'accept: application/json' -d '' | python3 -mjson.tool
+curl -X 'POST' 'http://127.0.0.1:8000/floor/9' -H 'accept: application/json' -d '' | python3 -mjson.tool
+curl -X 'POST' 'http://127.0.0.1:8000/floor/4' -H 'accept: application/json' -d '' | python3 -mjson.tool
+curl -X 'POST' 'http://127.0.0.1:8000/floor/18' -H 'accept: application/json' -d '' | python3 -mjson.tool
+curl -X 'POST' 'http://127.0.0.1:8000/floor/102' -H 'accept: application/json' -d '' | python3 -mjson.tool
 ```
