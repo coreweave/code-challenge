@@ -16,6 +16,10 @@ class Elevator:
     def __str__(self):
         return 'INFO:      elevator {} floor {}'.format(self.state.value, self.floor)
 
+    '''
+    @param floor: an integer floor number
+    @return: None, raises ValueError is floor is out of range
+    '''
     def validate(self, floor: int):
         if not (self.min_floor <= floor <= self.max_floor):
             raise ValueError('floor out of range [{}, {}]'.format(self.min_floor, self.max_floor))
@@ -33,20 +37,20 @@ class Elevator:
         raise ValueError('illegal elevator state transition')
 
     '''
-    @param floor: an integer floor number
+    @param target_floor: an integer floor number
     @return: a list of evelator activities
     '''
-    async def move(self, floor: int):
+    async def move(self, target_floor: int):
         activities = []
         try:
-            self.validate(floor)
+            self.validate(target_floor)
             activities.append(str(self))
-            step = (-1) ** (floor < self.floor)
+            step = (-1) ** (target_floor < self.floor)
             state = State.UP if step == 1 else State.DOWN
-            for i in range(self.floor, floor + step, step):
-                activities.append(self.transition(state, i))
-            activities.append(self.transition(State.OPEN, floor))
-            activities.append(self.transition(State.IDLE, floor))
+            for floor in range(self.floor, target_floor + step, step):
+                activities.append(self.transition(state, floor))
+            activities.append(self.transition(State.OPEN, target_floor))
+            activities.append(self.transition(State.IDLE, target_floor))
         except ValueError as e:
             activities.append('ERROR:      {}'.format(e))
         finally:
