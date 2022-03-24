@@ -78,7 +78,7 @@ Error handling:
 
 ## Example
 
-Method 1: use ![Interactive API Docs](http://127.0.0.1:8000/docs)
+Method 1: use Interactive API Docs http://127.0.0.1:8000/docs
 
 Method 2: run in command line
 

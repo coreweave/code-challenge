@@ -23,6 +23,7 @@ class Elevator:
     def validate(self, floor: int):
         if not (self.min_floor <= floor <= self.max_floor):
             raise ValueError('floor out of range [{}, {}]'.format(self.min_floor, self.max_floor))
+            
     '''
     @param state: the target state
     @return: True if the state transition is legal False otherwise
