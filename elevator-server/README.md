@@ -43,3 +43,53 @@ at floor 8 and moving IDLE
 ```
 
 Different elevator algorithms exist to optimize for different use cases. The typical elevator has a button or two outside to fetch the elevator, and separate floor buttons inside. Some systems allow fetching the elevator and requesting a floor at the same time. Feel free to conceptualize whichever style of elevator you find fun.
+
+## Set Up
+
+```
+sudo apt update
+sudo apt install python3-pip
+pip3 install -r requirements.txt
+```
+
+## Minimal Design
+
+Directory structure:
+* requirements.txt: Python package dependencies
+* main.py: application and API
+* elevator.py: Elevator class
+
+API:
+* POST /floor/{target_floor} -> application/json {'activities': a list of activities}
+
+Concurrency:
+* Used async and await to handle concurrent requests
+
+
+Error handling:
+* validates input, raises ValueError
+* validates elevator state transition, raises ValueError
+
+## Assumptions and Improvements
+
+* One application creates one Elevator object
+* More APIs can be added
+* Real-world elevator state transition has more states. This project only handles four basic states: idle, up, down, doors open. State transition control is naive too.
+
+## Example
+
+Method 1: use Interactive API Docs http://127.0.0.1:8000/docs
+
+Method 2: run in command line
+
+```
+uvicorn main:app --reload
+curl -X 'POST' 'http://127.0.0.1:8000/floor/8' -H 'accept: application/json' -d '' | python3 -mjson.tool
+```
+
+Method 3: run test script
+
+```
+uvicorn main:app --reload
+./test.sh
+```
